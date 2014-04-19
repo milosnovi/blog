@@ -26,17 +26,17 @@ function PostsDAO(db) {
 				"permalink":permalink,
 				"tags": tags,
 				"comments": [],
-				"date": new Date()};
+				"date": new Date()}
 
 		// now insert the post
 		// hw3.2 TODO
-		posts.insert(post, function(err, inserted) {
-			if(err) {
-				callback(err, null);
-			}
-			console.dir("Successfully inserted: " + JSON.stringify(inserted));
-			console.dir(inserted);
-			callback(null, post.permalink);
+		posts.insert(post, function (err, result) {
+			"use strict";
+
+			if (err) return callback(err, null);
+
+			console.log("Inserted new post");
+			callback(err, permalink);
 		});
 	}
 
@@ -45,7 +45,6 @@ function PostsDAO(db) {
 
 		posts.find().sort('date', -1).limit(num).toArray(function(err, items) {
 			"use strict";
-
 			if (err) return callback(err, null);
 
 			console.log("Found " + items.length + " posts");
@@ -59,7 +58,7 @@ function PostsDAO(db) {
 
 		posts.find({ tags : tag }).sort('date', -1).limit(num).toArray(function(err, items) {
 			"use strict";
-
+// console.log(items);
 			if (err) return callback(err, null);
 
 			console.log("Found " + items.length + " posts");
@@ -72,8 +71,7 @@ function PostsDAO(db) {
 		"use strict";
 		posts.findOne({'permalink': permalink}, function(err, post) {
 			"use strict";
-console.dir('post');
-console.dir(post);
+
 			if (err) return callback(err, null);
 
 			callback(err, post);
@@ -89,22 +87,13 @@ console.dir(post);
 			comment['email'] = email
 		}
 
-		this.getPostByPermalink(permalink, function(err, post) {
-			console.dir('cllback');
-			console.dir(post);
-			if(err) {
-				callback(err, null);
-			}
-			console.log(post['permalink']);
+		// hw3.3 TODO
+		posts.update({'permalink': permalink}, {'$push': {'comments': comment}}, function(err, numModified) {
+			"use strict";
 
-			var query = { '_id': post['_id']};
-			var operator = { '$push' : { 'comments' : comment } };
+			if (err) return callback(err, null);
 
-			posts.update(query, operator, function(err, updated) {
-				if(err) throw err;
-				console.dir("Successfully updated " + updated + " documents!");
-				callback(null, updated);
-			});
+			callback(err, numModified);
 		});
 	}
 }
