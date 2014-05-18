@@ -76,10 +76,7 @@ function SessionHandler (db) {
 
 	this.displaySignupPage =  function(req, res, next) {
 		"use strict";
-		res.render("signup", {username:"", password:"",
-									password_error:"",
-									email:"", username_error:"", email_error:"",
-									verify_error :""});
+		res.render("signup", {username:"", password:"", password_error:"", email:"", username_error:"", email_error:"", verify_error :""});
 	}
 
 	function validateSignup(username, password, verify, email, errors) {

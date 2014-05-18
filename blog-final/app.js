@@ -11,7 +11,7 @@ var middleware = require('./middleware');
 // mongoose.set('debug', true);
 //  Install module by updating package.json  npm install mongoose --save
 //  Install module by updating package.json  npm install express --save
-mongoose.connect('mongodb://localhost:27017/blog', function(err, db) {
+mongoose.connect('mongodb://localhost:27017/blog-final', function(err, db) {
 	if (err) throw err;
 
 	var app = express();

@@ -19,7 +19,7 @@ MongoClient.connect('mongodb://localhost:27017/blog', function(err, db) {
 	// Express middleware to populate 'req.cookies' so we can access cookies
 	app.use(express.cookieParser());
 
-	// Express middleware to populate 'r1outes§§§et'/q.body' so we can access POST variables
+	// Express middleware to populate 'req.body' so we can access POST variables
 	app.use(express.bodyParser());
 
 	// Application routes
