@@ -29,7 +29,6 @@ module.exports = function (app) {
   // read
 app.get("/post/:id", function (req, res, next) {
 	var id = req.param('id');
-
 	var promise = BlogPost.findComments(id)
 		.sort('created')
 		.select('-_id') // exclude the _id
